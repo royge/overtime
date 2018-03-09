@@ -8,12 +8,12 @@ import (
 
 const (
 	timeFormat = "15:04"
-	workHours  = "9h30m"
 )
 
 func main() {
 	start := flag.String("since", "00:01", "Start time.")
 	end := flag.String("until", "23:59", "End time.")
+	workHours := flag.String("work", "9h30m", "Working hours including lunch break.")
 
 	flag.Parse()
 
@@ -29,7 +29,7 @@ func main() {
 		return
 	}
 
-	w, _ := time.ParseDuration(workHours)
+	w, _ := time.ParseDuration(*workHours)
 	duration := until.Sub(since) - w
 	fmt.Println(duration.String())
 }
