@@ -1,4 +1,4 @@
-# timediff
+# overtime
 
 Calculate overtime hours.
 
