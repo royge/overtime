@@ -1,6 +1,6 @@
 # timediff
 
-Calculate and display difference between two times.
+Calculate overtime hours.
 
 ## How To Use
 
