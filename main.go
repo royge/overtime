@@ -29,7 +29,12 @@ func main() {
 		return
 	}
 
-	w, _ := time.ParseDuration(*workHours)
-	duration := until.Sub(since) - w
+	duration := until.Sub(since)
+
+	if *workHours != "0" {
+		w, _ := time.ParseDuration(*workHours)
+		duration -= w
+	}
+
 	fmt.Println(duration.String())
 }
