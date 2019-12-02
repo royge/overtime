@@ -3,12 +3,34 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"time"
 )
 
 const (
 	timeFormat = "15:04"
 )
+
+func calculate(start, end, workHours string) (time.Duration, error) {
+	since, err := time.Parse(timeFormat, start)
+	if err != nil {
+		return 0, err
+	}
+
+	until, err := time.Parse(timeFormat, end)
+	if err != nil {
+		return 0, err
+	}
+
+	duration := until.Sub(since)
+
+	if workHours != "0" {
+		w, _ := time.ParseDuration(workHours)
+		duration -= w
+	}
+
+	return duration, nil
+}
 
 func main() {
 	start := flag.String("since", "00:01", "Start time.")
@@ -17,24 +39,11 @@ func main() {
 
 	flag.Parse()
 
-	since, err := time.Parse(timeFormat, *start)
+	duration, err := calculate(*start, *end, *workHours)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalf("can determine overtime: %v", err)
 		return
 	}
 
-	until, err := time.Parse(timeFormat, *end)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	duration := until.Sub(since)
-
-	if *workHours != "0" {
-		w, _ := time.ParseDuration(*workHours)
-		duration -= w
-	}
-
-	fmt.Println(duration.String())
+	fmt.Printf("Overtime: %s", duration.String())
 }

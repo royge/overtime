@@ -1,1 +1,3 @@
-module "github.com/royge/overtime"
+module github.com/royge/overtime
+
+go 1.13
